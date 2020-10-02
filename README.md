@@ -2,7 +2,7 @@
 
 Forked from [here](https://github.com/vvigilante/youtube-subtitles-downlaoder) to use as a submodule for [`url_metadata`](https://github.com/seanbreckenridge/url_metadata)
 
-Used as a git submodule namespace package instead of a CLI tool
+Used as a git submodule 'python package' instead of a CLI tool
 
 ```python
 from youtbe_subtitles_downloader import download_subs
