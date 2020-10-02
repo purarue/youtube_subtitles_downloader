@@ -1,11 +1,12 @@
-# Youtube subtitles downloader
-Download closed captions from youtube videos (both manual and automatically generated), and convert them to srt format 
+# Youtube Subtitles Downloader
 
-python implementation
+Forked from [here](https://github.com/vvigilante/youtube-subtitles-downlaoder) to use as a submodule for [`url_metadata`](https://github.com/seanbreckenridge/url_metadata)
 
-## Usage example
-```bash
-ytsubtitles ZXD4X6INh7w --lang=it > out.srt
+Used as a git submodule namespace package instead of a CLI tool
+
+```python
+from youtbe_subtitles_downloader import download_subs
+download_subs("YoMUQXgcH94", "en")
 ```
 
 # Acknowledgements
