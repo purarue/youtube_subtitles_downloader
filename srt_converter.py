@@ -1,4 +1,5 @@
 import re
+import html
 
 
 # Conversion code from
@@ -25,11 +26,7 @@ def print_srt_line(i, elms):
 
 
 def convert_html(text):
-    """A few HTML encodings replacements.
-    &amp;#39; to '
-    &amp;quot; to "
-    """
-    return text.replace("&amp;#39;", "'").replace("&amp;quot;", '"')
+    return html.unescape(text)
 
 
 def to_srt(buf):
