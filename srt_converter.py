@@ -31,7 +31,7 @@ def convert_html(text):
 
 def to_srt(buf):
     out_srt = []
-    buf = "".join(buf.replace("\n", "")).split("><")
+    buf = "".join(buf.replace("\n", " ")).split("><")
     i = 0
     for text in buf:
         parsed = parse_line(text)
