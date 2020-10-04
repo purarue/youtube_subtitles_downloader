@@ -1,7 +1,12 @@
+import json
+
+import html
 import urllib.request
 import urllib.parse
-import json
-import html
+
+from http.client import HTTPResponse
+from typing import Dict, Any
+
 from .srt_converter import to_srt
 
 
@@ -13,33 +18,33 @@ class VideoParsingException(Exception):
     pass
 
 
-def download_subs(video_identifier, target_language) -> str:
-    video_info = __get_video_info__(video_identifier)
+def download_subs(video_identifier: str, target_language: str) -> str:
+    video_info: Dict[str, Any] = get_video_info(video_identifier)
     try:
-        track_urls = __get_sub_track_urls__(video_info)
-        target_track_url = __select_target_language_track_url(
+        track_urls: Dict[str, Any] = get_sub_track_urls(video_info)
+        target_track_url: str = select_target_lang_track_url(
             track_urls, target_language
         )
-        subs_data = __get_subs_data__(target_track_url)
+        subs_data: str = get_subs_data(target_track_url)
         return to_srt(subs_data)
     except (VideoParsingException, TrackNotFoundException) as e:
         raise e
 
 
-def __get_video_info__(video_id):
+def get_video_info(video_id: str) -> Dict[str, Any]:
     """Get video info. Scraping code inspired to:
     https://github.com/syzer/youtube-captions-scraper/blob/master/src/index.js
     """
-    contents = urllib.request.urlopen(
+    resp: HTTPResponse = urllib.request.urlopen(
         "https://youtube.com/get_video_info?video_id=%s&hl=en" % video_id
-    ).read()
-    contents = contents.decode("utf-8")
-    return urllib.parse.parse_qs(contents)
+    )
+    html_contents: str = resp.read().decode("utf-8")
+    return urllib.parse.parse_qs(html_contents)
 
 
-def __get_sub_track_urls__(video_info):
+def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
     try:
-        video_response = json.loads(video_info["player_response"][0])
+        video_response: Dict[str, Any] = json.loads(video_info["player_response"][0])
         caption_tracks = video_response["captions"]["playerCaptionsTracklistRenderer"][
             "captionTracks"
         ]
@@ -54,14 +59,15 @@ def __get_sub_track_urls__(video_info):
         )
 
 
-def __select_target_language_track_url(track_urls, target_language):
+def select_target_lang_track_url(track_urls: Dict[str, Any], target_language: str) -> str:
     try:
-        return track_urls[target_language]
+        chosen_lang: str = track_urls[target_language]
+        return chosen_lang
     except KeyError:
         raise TrackNotFoundException()
 
 
-def __get_subs_data__(subs_url):
-    contents = urllib.request.urlopen(subs_url).read()
-    contents = contents.decode("utf-8")
-    return html.unescape(contents)
+def get_subs_data(subs_url: str) -> str:
+    resp: HTTPResponse = urllib.request.urlopen(subs_url)
+    html_contents: str = resp.read().decode("utf-8")
+    return html.unescape(html_contents)
