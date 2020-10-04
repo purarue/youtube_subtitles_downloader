@@ -59,7 +59,9 @@ def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
         )
 
 
-def select_target_lang_track_url(track_urls: Dict[str, Any], target_language: str) -> str:
+def select_target_lang_track_url(
+    track_urls: Dict[str, Any], target_language: str
+) -> str:
     try:
         chosen_lang: str = track_urls[target_language]
         return chosen_lang

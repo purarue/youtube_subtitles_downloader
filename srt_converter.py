@@ -36,7 +36,7 @@ def to_srt(buf: str) -> str:
     srt_data: List[str] = "".join(buf.replace("\n", " ")).split("><")
     i: int = 0
     for text in srt_data:
-        parsed: Optional[Tuple[str, str, str]]= parse_line(text)
+        parsed: Optional[Tuple[str, str, str]] = parse_line(text)
         if parsed is not None:
             i += 1
             out_srt.append(format_srt_line(i, parsed))
