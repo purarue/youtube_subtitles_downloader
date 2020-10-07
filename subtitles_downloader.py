@@ -8,25 +8,21 @@ import requests
 from .srt_converter import to_srt
 
 
-class TrackNotFoundException(Exception):
-    pass
-
-
-class VideoParsingException(Exception):
+class YoutubeSubtitlesException(Exception):
     pass
 
 
 def download_subs(video_identifier: str, target_language: str) -> str:
-    video_info: Dict[str, Any] = get_video_info(video_identifier)
     try:
+        video_info: Dict[str, Any] = get_video_info(video_identifier)
         track_urls: Dict[str, Any] = get_sub_track_urls(video_info)
         target_track_url: str = select_target_lang_track_url(
             track_urls, target_language
         )
         subs_data: str = get_subs_data(target_track_url)
         return to_srt(subs_data)
-    except (VideoParsingException, TrackNotFoundException) as e:
-        raise e
+    except (requests.exceptions.RequestException, YoutubeSubtitlesException) as e:
+        raise YoutubeSubtitlesException(str(e))
 
 
 def get_video_info(video_id: str) -> Dict[str, Any]:
@@ -48,9 +44,8 @@ def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
             for caption_track in caption_tracks
         }
     except KeyError:
-        raise VideoParsingException(
-            "Error retrieving metadata. "
-            "The video may be non-existing or be licensed."
+        raise YoutubeSubtitlesException(
+            "Error retrieving metadata. The video may be non-existing or be licensed."
         )
 
 
@@ -61,7 +56,7 @@ def select_target_lang_track_url(
         chosen_lang: str = track_urls[target_language]
         return chosen_lang
     except KeyError:
-        raise TrackNotFoundException()
+        raise YoutubeSubtitlesException(f"Could not find track for target language {target_language}")
 
 
 def get_subs_data(subs_url: str) -> str:
