@@ -29,7 +29,9 @@ def get_video_info(video_id: str) -> Dict[str, Any]:
     """Get video info. Scraping code inspired to:
     https://github.com/syzer/youtube-captions-scraper/blob/master/src/index.js
     """
-    resp: requests.Response = requests.get("https://youtube.com/get_video_info?video_id=%s&hl=en" % video_id)
+    resp: requests.Response = requests.get(
+        "https://youtube.com/get_video_info?video_id=%s&hl=en" % video_id
+    )
     return urllib.parse.parse_qs(resp.text)
 
 
@@ -56,7 +58,9 @@ def select_target_lang_track_url(
         chosen_lang: str = track_urls[target_language]
         return chosen_lang
     except KeyError:
-        raise YoutubeSubtitlesException(f"Could not find track for target language {target_language}")
+        raise YoutubeSubtitlesException(
+            f"Could not find track for target language {target_language}"
+        )
 
 
 def get_subs_data(subs_url: str) -> str:
