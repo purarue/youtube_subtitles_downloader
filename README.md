@@ -5,7 +5,7 @@ Forked from [here](https://github.com/vvigilante/youtube-subtitles-downlaoder) t
 Used as a git submodule 'python package' instead of a CLI tool
 
 ```python
-from youtbe_subtitles_downloader import download_subs
+from youtube_subtitles_downloader import download_subs
 download_subs("YoMUQXgcH94", "en")
 ```
 
