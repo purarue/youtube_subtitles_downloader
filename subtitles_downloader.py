@@ -47,7 +47,7 @@ def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
         }
     except KeyError:
         raise YoutubeSubtitlesException(
-            "Error retrieving metadata. The video may be non-existing or be licensed."
+            "Error retrieving metadata. The video may be not have subtitles, or may be licensed"
         )
 
 
