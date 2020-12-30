@@ -12,5 +12,6 @@ download_subs("YoMUQXgcH94", "en")
 ```
 
 # Acknowledgements
+
 - Original js implementation: https://github.com/syzer/youtube-captions-scraper/blob/master/src/index.js
 - SRT conversion: http://code.activestate.com/recipes/577459-convert-a-youtube-transcript-in-srt-subtitle/
