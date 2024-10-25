@@ -1,6 +1,6 @@
 # Youtube Subtitles Downloader
 
-Forked from [here](https://github.com/vvigilante/youtube-subtitles-downlaoder) to use as a submodule for [`url_metadata`](https://github.com/seanbreckenridge/url_metadata)
+Forked from [here](https://github.com/vvigilante/youtube-subtitles-downlaoder) to use as a submodule for [`url_metadata`](https://github.com/purarue/url_metadata)
 
 I prefer this to `youtube-dl` since this also downloads automatically generated subtitles, which gives me access to much more info.
 
